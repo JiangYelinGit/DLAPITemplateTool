@@ -1,0 +1,44 @@
+//
+//  DL{{ ClassName }}Api.m
+//  ZCJNetworkCodeGenerateTool
+//
+//  Created by Aaron on 2017/2/24.
+//  Copyright © 2017年 Aaron. All rights reserved.
+//
+
+#import "DL{{ ClassName }}Api.h"
+
+@implementation DL{{ ClassName }}Api {
+{% for p in Param %}
+    {{ p.value }} *_{{ p.key }};
+{% /for %}
+}
+
+
+- (id)init{% for p in Param %}With{{ p.key | capitalized }}:({{ p.value }} *){{ p.key }} {% /for %}{
+    self = [super init];
+    if (self) {
+        {% for p in Param %}
+        _{{ p.key }} = {{ p.key }};
+		{% /for %}
+    }
+    return self;
+}
+
+- (NSString *)requestUrl {
+    return @"{{ Url }}";
+}
+
+- (YTKRequestMethod)requestMethod {
+    return {{ MethodType }};
+}
+
+- (id)requestArgument {
+
+    NSDictionary *query = @{ {% for p in Param %}@"{{ p.key }}": _{{ p.key }}{% if Param.@lastObject.key equalsString p.key %}{% else %}, {% /if %}{% /for %}};
+    NSDictionary *global = [super requestArgument];
+    NSDictionary *result = @{@"query":query,@"global":global};
+    return result;
+
+}
+@end

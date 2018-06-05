@@ -1,0 +1,16 @@
+//
+//  DL{{ ClassName }}Api.h
+//  ZCJNetworkCodeGenerateTool
+//
+//  Created by Aaron on 2017/2/24.
+//  Copyright © 2017年 Aaron. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <YTKNetwork/YTKRequest.h>
+
+@interface DL{{ ClassName }}Api : DLYTKRequest
+
+- (id)init{% for p in Param %}With{{ p.key | capitalized }}:({{ p.value }} *){{ p.key }} {% /for %};
+
+@end
